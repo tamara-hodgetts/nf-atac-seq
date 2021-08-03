@@ -4,14 +4,12 @@
 
 params.options = [:]
 
-include { SAMPLESHEET_CHECK } from '../../modules/local/samplesheet_check' addParams( options: params.options )
-
 workflow INPUT_CHECK {
     take:
     samplesheet // file: /path/to/samplesheet.csv
 
     main:
-    SAMPLESHEET_CHECK ( samplesheet )
+    Channel.fromPath(samplesheet)
         .splitCsv ( header:true, sep:',' )
         .map { create_fastq_channels(it) }
         .set { reads }
@@ -23,8 +21,9 @@ workflow INPUT_CHECK {
 // Function to get list of [ meta, [ fastq_1, fastq_2 ] ]
 def create_fastq_channels(LinkedHashMap row) {
     def meta = [:]
-    meta.id           = row.sample
-    meta.single_end   = row.single_end.toBoolean()
+    meta.id        = row.group + "_R" + row.replicate + "_T0"
+    meta.group     = row.group
+    meta.replicate = row.replicate
 
     def array = []
     if (!file(row.fastq_1).exists()) {
