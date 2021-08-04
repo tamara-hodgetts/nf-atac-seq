@@ -23,9 +23,9 @@ if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input sample
 ========================================================================================
 */
 
-ch_multiqc_config        = file("$projectDir/assets/multiqc_config.yaml", checkIfExists: true)
-ch_multiqc_custom_config = params.multiqc_config ? Channel.fromPath(params.multiqc_config) : Channel.empty()
-
+//ch_multiqc_config        = file("$projectDir/assets/multiqc_config.yaml", checkIfExists: true)
+//ch_multiqc_custom_config = params.multiqc_config ? Channel.fromPath(params.multiqc_config) : Channel.empty()
+ 
 /*
 ========================================================================================
     IMPORT LOCAL MODULES/SUBWORKFLOWS
@@ -52,8 +52,8 @@ include { INPUT_CHECK } from '../subworkflows/local/input_check' addParams( opti
 ========================================================================================
 */
 
-def multiqc_options   = modules['multiqc']
-multiqc_options.args += params.multiqc_title ? Utils.joinModuleArgs(["--title \"$params.multiqc_title\""]) : ''
+// def multiqc_options   = modules['multiqc']
+// multiqc_options.args += params.multiqc_title ? Utils.joinModuleArgs(["--title \"$params.multiqc_title\""]) : ''
 
 //
 // MODULE: Installed directly from nf-core/modules
@@ -63,7 +63,30 @@ include { FASTQC  } from '../modules/nf-core/modules/fastqc/main'  addParams( op
 
 // including additional modules
 include { TRIMGALORE } from '../modules/nf-core/modules/trimgalore/main'
+include { BWA_INDEX } from '../modules/nf-core/modules/bwa/index/main'
 include { BWA_MEM } from '../modules/nf-core/modules/bwa/mem/main'
+
+// building a BWA index
+// if (!params.bwa_index) {
+//     process BWA_INDEX {
+//         tag "$fasta"
+//         label 'process_high'
+//         publishDir path: { params.save_reference ? "${params.outdir}/genome" : params.outdir },
+//             saveAs: { params.save_reference ? it : null }, mode: params.publish_dir_mode
+
+//         input:
+//         path fasta
+
+//         output:
+//         path 'BWAIndex' into ch_bwa_index
+
+//         script:
+//         """
+//         bwa index -a bwtsw $fasta
+//         mkdir BWAIndex && mv ${fasta}* BWAIndex
+//         """
+//     }
+// }
 /*
 ========================================================================================
     RUN MAIN WORKFLOW
@@ -89,7 +112,7 @@ workflow THATACSEQ {
             [ meta, fastq ] }
     .groupTuple(by: [0])
     .set { ch_fastq }
-    ch_fastq | view
+    //ch_fastq | view
 
     //
     // MODULE: Run FastQC
@@ -98,14 +121,18 @@ workflow THATACSEQ {
          INPUT_CHECK.out.reads
      )
       ch_software_versions = ch_software_versions.mix(FASTQC.out.version.first().ifEmpty(null))
-    ch_software_versions | view
+    //ch_software_versions | view
     //
     TRIMGALORE (
         INPUT_CHECK.out.reads
     )
     //
+    BWA_INDEX (
+        params.fasta
+    )
+    //
     // BWA_MEM (
-    //     INPUT_CHECK.out.reads
+    //      INPUT_CHECK.out.reads
     // )
     // //
     // // MODULE: Pipeline reporting
