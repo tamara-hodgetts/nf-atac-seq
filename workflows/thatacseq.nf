@@ -131,9 +131,9 @@ workflow THATACSEQ {
         params.fasta
     )
     //
-    // BWA_MEM (
-    //      INPUT_CHECK.out.reads
-    // )
+     BWA_MEM (
+          INPUT_CHECK.out.reads, BWA_INDEX.out.index
+    )
     // //
     // // MODULE: Pipeline reporting
     // //
