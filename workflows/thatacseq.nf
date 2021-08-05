@@ -70,6 +70,7 @@ include { SAMTOOLS_SORT } from '../modules/nf-core/modules/samtools/sort/main'
 include { SAMTOOLS_INDEX } from '../modules/nf-core/modules/samtools/index/main'
 include { SAMTOOLS_FLAGSTAT } from '../modules/nf-core/modules/samtools/flagstat/main'
 include { SAMTOOLS_IDXSTATS } from '../modules/nf-core/modules/samtools/idxstats/main'
+include { SAMTOOLS_STATS } from '../modules/nf-core/modules/samtools/stats/main'
 
 //include {samtools_index; samtools_view; samtools_faidx; samtools_sort} from '../modules/nf-core/modules/samtools'
 
@@ -158,6 +159,10 @@ workflow THATACSEQ {
     )
     //
     SAMTOOLS_IDXSTATS (
+        BWA_MEM.out.bam, SAMTOOLS_INDEX.out.bai
+    )
+    // 
+    SAMTOOLS_STATS (
         BWA_MEM.out.bam, SAMTOOLS_INDEX.out.bai
     )
     // converting bam file to a sorted BAM
