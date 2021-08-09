@@ -73,6 +73,8 @@ include { SAMTOOLS_IDXSTATS } from '../modules/nf-core/modules/samtools/idxstats
 include { SAMTOOLS_STATS } from '../modules/nf-core/modules/samtools/stats/main'
 include { SAMTOOLS_VIEW} from '../modules/nf-core/modules/samtools/view/main'
 
+include { MACS2_CALLPEAK} from '../modules/nf-core/modules/macs2/callpeaks/main'
+
 //include {samtools_index; samtools_view; samtools_faidx; samtools_sort} from '../modules/nf-core/modules/samtools'
 
 
@@ -169,6 +171,10 @@ workflow THATACSEQ {
     // 
     SAMTOOLS_VIEW {
         BWA_MEM.out.bam
+    }
+    // 
+    MACS2_CALLPEAK {
+        SAMTOOLS_VIEW.out.bam
     }
     // converting bam file to a sorted BAM
     // process SORT_BAM {
