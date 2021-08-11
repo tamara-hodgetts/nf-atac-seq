@@ -152,10 +152,12 @@ workflow THATACSEQ {
     SAMTOOLS_SORT (
          BWA_MEM.out.bam
     )
+    // SAMTOOLS_SORT.out.bam
     //
-    // SAMTOOLS_INDEX (
-    //     BWA_MEM.out.bam
-    // )
+     SAMTOOLS_INDEX (
+         SAMTOOLS_SORT.out.bam
+    )
+    // SAMTOOLS_INDEX.out.bai
     // // 
     // SAMTOOLS_FLAGSTAT (
     //     BWA_MEM.out.bam, SAMTOOLS_INDEX.out.bai
