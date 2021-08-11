@@ -62,18 +62,18 @@ include { FASTQC  } from '../modules/nf-core/modules/fastqc/main'  addParams( op
 // include { MULTIQC } from '../modules/nf-core/modules/multiqc/main' addParams( options: multiqc_options   )
 
 // including additional modules
-include { TRIMGALORE } from '../modules/nf-core/modules/trimgalore/main'
-include { BWA_INDEX } from '../modules/nf-core/modules/bwa/index/main'
-include { BWA_MEM } from '../modules/nf-core/modules/bwa/mem/main'
+include { TRIMGALORE } from '../modules/nf-core/modules/trimgalore/main' addParams( options: modules['trimgalore'] )
+include { BWA_INDEX } from '../modules/nf-core/modules/bwa/index/main' addParams( options: modules['bwa_index'] )
+include { BWA_MEM } from '../modules/nf-core/modules/bwa/mem/main' addParams( options: modules['bwa_mem'] )
 
-include { SAMTOOLS_SORT } from '../modules/nf-core/modules/samtools/sort/main' 
-include { SAMTOOLS_INDEX } from '../modules/nf-core/modules/samtools/index/main'
-include { SAMTOOLS_FLAGSTAT } from '../modules/nf-core/modules/samtools/flagstat/main'
-include { SAMTOOLS_IDXSTATS } from '../modules/nf-core/modules/samtools/idxstats/main'
-include { SAMTOOLS_STATS } from '../modules/nf-core/modules/samtools/stats/main'
-include { SAMTOOLS_VIEW} from '../modules/nf-core/modules/samtools/view/main'
+include { SAMTOOLS_SORT } from '../modules/nf-core/modules/samtools/sort/main' addParams( options: modules['samtools_sort'] )
+include { SAMTOOLS_INDEX } from '../modules/nf-core/modules/samtools/index/main' addParams( options: modules['samtools_index'] )
+include { SAMTOOLS_FLAGSTAT } from '../modules/nf-core/modules/samtools/flagstat/main' addParams( options: modules['samtools_flagstat'] )
+include { SAMTOOLS_IDXSTATS } from '../modules/nf-core/modules/samtools/idxstats/main' addParams( options: modules['samtools_idxstats'] )
+include { SAMTOOLS_STATS } from '../modules/nf-core/modules/samtools/stats/main' addParams( options: modules['samtools_stats'] )
+include { SAMTOOLS_VIEW} from '../modules/nf-core/modules/samtools/view/main' addParams( options: modules['samtools_view'] )
 
-include { MACS2_CALLPEAK} from '../modules/nf-core/modules/macs2/callpeak/main'
+include { MACS2_CALLPEAK} from '../modules/nf-core/modules/macs2/callpeak/main' addParams( options: modules['callpeak'] )
 
 //include {samtools_index; samtools_view; samtools_faidx; samtools_sort} from '../modules/nf-core/modules/samtools'
 
