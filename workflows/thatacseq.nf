@@ -157,6 +157,9 @@ workflow THATACSEQ {
      SAMTOOLS_INDEX (
          SAMTOOLS_SORT.out.bam
     )
+
+    // joining the output from samtools index and samtools sort into a single channel that is a tuple
+    SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.bai, by: [0]) | view
     // SAMTOOLS_INDEX.out.bai
     // // 
     // SAMTOOLS_FLAGSTAT (
@@ -171,12 +174,12 @@ workflow THATACSEQ {
     //     BWA_MEM.out.bam, SAMTOOLS_INDEX.out.bai
     // )
     // // 
-    // SAMTOOLS_VIEW {
-    //     BWA_MEM.out.bam
-    // }
+    SAMTOOLS_VIEW {
+         SAMTOOLS_SORT.out.bam
+    }
     // // 
     // MACS2_CALLPEAK {
-    //     SAMTOOLS_VIEW.out.bam
+    //      SAMTOOLS_VIEW.out.bam
     // }
     // converting bam file to a sorted BAM
     // process SORT_BAM {
