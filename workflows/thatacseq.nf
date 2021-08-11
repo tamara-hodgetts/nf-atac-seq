@@ -159,7 +159,7 @@ workflow THATACSEQ {
     )
 
     // joining the output from samtools index and samtools sort into a single channel that is a tuple
-    SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.bai, by: [0]) | view
+    // SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.bai, by: [0]) | view
     // SAMTOOLS_INDEX.out.bai
     // // 
     // SAMTOOLS_FLAGSTAT (
