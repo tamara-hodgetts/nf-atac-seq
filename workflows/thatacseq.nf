@@ -170,9 +170,9 @@ workflow THATACSEQ {
     // SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.bai, by: [0]) | view
     // SAMTOOLS_INDEX.out.bai
     // // 
-    // SAMTOOLS_FLAGSTAT (
-    //     BWA_MEM.out.bam, SAMTOOLS_INDEX.out.bai
-    // )
+     SAMTOOLS_FLAGSTAT (
+         ch_bam_bai
+    )
     // //
     // SAMTOOLS_IDXSTATS (
     //     BWA_MEM.out.bam, SAMTOOLS_INDEX.out.bai
