@@ -176,9 +176,9 @@ workflow THATACSEQ {
          ch_bam_bai
     )
     // // 
-    // SAMTOOLS_STATS (
-    //     BWA_MEM.out.bam, SAMTOOLS_INDEX.out.bai
-    // )
+     SAMTOOLS_STATS (
+         ch_bam_bai
+    )
     // // 
     
     // // 
