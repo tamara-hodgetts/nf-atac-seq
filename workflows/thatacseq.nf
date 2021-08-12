@@ -185,38 +185,7 @@ workflow THATACSEQ {
     // MACS2_CALLPEAK {
     //      SAMTOOLS_VIEW.out.bam
     // }
-    // converting bam file to a sorted BAM
-    // process SORT_BAM {
-    //     tag "$name"
-    //     label 'process_medium'
-    //     if (params.save_align_intermeds) {
-    //         publishDir path: "${params.outdir}/bwa/library", mode: params.publish_dir_mode,
-    //             saveAs: { filename ->
-    //                       if (filename.endsWith('.flagstat')) "samtools_stats/$filename"
-    //                       else if (filename.endsWith('.idxstats')) "samtools_stats/$filename"
-    //                       else if (filename.endsWith('.stats')) "samtools_stats/$filename"
-    //                       else filename
-    //                     }
-    //     }
-
-    // input:
-    // tuple val(name), path(bam)
-
-    // output:
-    // tuple val(name), path('*.sorted.{bam,bam.bai}') into ch_sort_bam_merge
-    // path '*.{flagstat,idxstats,stats}' into ch_sort_bam_flagstat_mqc
-
-    // script:
-    // prefix = "${name}.Lb"
-    // """
-    // samtools sort -@ $task.cpus -o ${prefix}.sorted.bam -T $name $bam
-    // samtools index ${prefix}.sorted.bam
-    // samtools flagstat ${prefix}.sorted.bam > ${prefix}.sorted.bam.flagstat
-    // samtools idxstats ${prefix}.sorted.bam > ${prefix}.sorted.bam.idxstats
-    // samtools stats ${prefix}.sorted.bam > ${prefix}.sorted.bam.stats
-    // """
-    // }
-
+    //
     // 
     // //
     // // MODULE: Pipeline reporting
