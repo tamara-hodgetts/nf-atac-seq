@@ -163,6 +163,10 @@ workflow THATACSEQ {
     }
     //
     // joining the output from samtools index and samtools sort into a single channel that is a tuple
+    ch_bam_sample_id = SAMTOOLS_SORT.out.bam.map               { row -> [row[0].id, row] }
+    ch_bai_sample_id = SAMTOOLS_INDEX.out.bai.map              { row -> [row[0].id, row] }
+    ch_bam_bai = ch_bam_sample_id.join(ch_bai_sample_id, by: [0]).map {row -> [row[1][0], row[1][1], row[2][1]]}
+    ch_bam_bai | view
     // SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.bai, by: [0]) | view
     // SAMTOOLS_INDEX.out.bai
     // // 
