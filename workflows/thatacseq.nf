@@ -166,17 +166,15 @@ workflow THATACSEQ {
     ch_bam_sample_id = SAMTOOLS_SORT.out.bam.map               { row -> [row[0].id, row] }
     ch_bai_sample_id = SAMTOOLS_INDEX.out.bai.map              { row -> [row[0].id, row] }
     ch_bam_bai = ch_bam_sample_id.join(ch_bai_sample_id, by: [0]).map {row -> [row[1][0], row[1][1], row[2][1]]}
-    ch_bam_bai | view
-    // SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.bai, by: [0]) | view
-    // SAMTOOLS_INDEX.out.bai
+    // ch_bam_bai | view
     // // 
      SAMTOOLS_FLAGSTAT (
          ch_bam_bai
     )
     // //
-    // SAMTOOLS_IDXSTATS (
-    //     BWA_MEM.out.bam, SAMTOOLS_INDEX.out.bai
-    // )
+     SAMTOOLS_IDXSTATS (
+         ch_bam_bai
+    )
     // // 
     // SAMTOOLS_STATS (
     //     BWA_MEM.out.bam, SAMTOOLS_INDEX.out.bai
