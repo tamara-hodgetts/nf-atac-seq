@@ -16,6 +16,7 @@ for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true
 
 // Check mandatory parameters
 if (params.input) { ch_input = file(params.input) } else { exit 1, 'Input samplesheet not specified!' }
+// if (params.macs2_gsize) { ch_macs2_gsize = val(params.macs2_gsize) } else { exit 1, 'macs2 gsize variable not specified!' }
 
 /*
 ========================================================================================
@@ -181,10 +182,16 @@ workflow THATACSEQ {
     )
     // // 
     
-    // // 
-    // MACS2_CALLPEAK {
-    //      SAMTOOLS_VIEW.out.bam
-    // }
+    // 
+    // creating an empty channel 
+    ch_macs2_gsize = Channel.value(params.modules['callpeak'].macs2_gsize)
+    // 
+    // storing the macs2_gsize variable in this channel
+    // ch_macs2_gsize = val(params.modules['callpeak'].macs2_gsize)
+    //
+    MACS2_CALLPEAK {
+          SAMTOOLS_VIEW.out.bam, ch_macs2_gsize
+    }
     //
     // 
     // //
