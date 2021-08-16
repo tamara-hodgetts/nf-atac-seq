@@ -19,7 +19,7 @@ process MACS2_CALLPEAK {
     }
 
     input:
-    tuple val(meta), path(ipbam), path(controlbam)
+    tuple val(meta), path(ipbam)//, path(controlbam)
     val   macs2_gsize
 
     output:
@@ -35,7 +35,7 @@ process MACS2_CALLPEAK {
     def software = getSoftwareName(task.process)
     def prefix   = options.suffix ? "${meta.id}${options.suffix}" : "${meta.id}"
     def format   = meta.single_end ? 'BAM' : 'BAMPE'
-    def control  = controlbam ? "--control $controlbam" : ''
+    // def control  = controlbam ? "--control $controlbam" : ''
     """
     macs2 \\
         callpeak \\
@@ -43,8 +43,7 @@ process MACS2_CALLPEAK {
         --gsize $macs2_gsize \\
         --format $format \\
         --name $prefix \\
-        --treatment $ipbam \\
-        $control
+        --treatment $ipbam 
 
     macs2 --version | sed -e "s/macs2 //g" > ${software}.version.txt
     """
