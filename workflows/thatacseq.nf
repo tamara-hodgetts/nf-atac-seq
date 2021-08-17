@@ -185,14 +185,14 @@ workflow THATACSEQ {
     // 
     // creating an empty channel 
     ch_macs2_gsize = Channel.value(params.macs2_gsize)
-    view | ch_macs2_gsize
+    // ch_macs2_gsize | view
     // 
     // storing the macs2_gsize variable in this channel
     // ch_macs2_gsize = val(params.modules['callpeak'].macs2_gsize)
     //
-    MACS2_CALLPEAK {
+    MACS2_CALLPEAK (
           SAMTOOLS_VIEW.out.bam, ch_macs2_gsize
-    }
+    )
     //
     // 
     // //
