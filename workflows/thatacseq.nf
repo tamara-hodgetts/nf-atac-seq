@@ -75,6 +75,7 @@ include { SAMTOOLS_STATS } from '../modules/nf-core/modules/samtools/stats/main'
 include { SAMTOOLS_VIEW} from '../modules/nf-core/modules/samtools/view/main' addParams( options: modules['samtools_view'] )
 
 include { MACS2_CALLPEAK} from '../modules/nf-core/modules/macs2/callpeak/main' addParams( options: modules['callpeak'] )
+include { UCSC_BEDGRAPHTOBIGWIG} from '../modules/nf-core/modules/ucsc/bedgraphtobigwig/main' addParams( options: modules['bedgraphtobigwig'] )
 
 //include {samtools_index; samtools_view; samtools_faidx; samtools_sort} from '../modules/nf-core/modules/samtools'
 
@@ -193,6 +194,10 @@ workflow THATACSEQ {
     MACS2_CALLPEAK (
           SAMTOOLS_VIEW.out.bam, ch_macs2_gsize
     )
+    // 
+    // UCSC_BEDGRAPHTOBIGWIG (
+    //     MACS2_CALLPEAK.out.bdg, path_of_sizes
+    // )
     //
     // 
     // //
