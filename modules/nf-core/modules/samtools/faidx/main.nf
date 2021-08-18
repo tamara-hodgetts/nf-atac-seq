@@ -24,11 +24,13 @@ process SAMTOOLS_FAIDX {
     output:
     path "*.fai"        , emit: fai
     path "*.version.txt", emit: version
+    path '*.sizes'      , emit: sizes // CHROMOSOME SIZES FILE FOR BEDTOOLS
 
     script:
     def software = getSoftwareName(task.process)
     """
     samtools faidx $fasta
+    cut -f 1,2 ${fasta}.fai > ${fasta}.sizes
     echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//' > ${software}.version.txt
     """
 }
