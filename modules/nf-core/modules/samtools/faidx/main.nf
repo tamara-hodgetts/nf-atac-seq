@@ -24,7 +24,7 @@ process SAMTOOLS_FAIDX {
     output:
     path "*.fai"        , emit: fai
     path "*.version.txt", emit: version
-    path '*.sizes'      , emit: sizes // CHROMOSOME SIZES FILE FOR BEDTOOLS
+    path '*.sizes'      , emit: sizes // for bedgraph to bigwig conversion
 
     script:
     def software = getSoftwareName(task.process)
