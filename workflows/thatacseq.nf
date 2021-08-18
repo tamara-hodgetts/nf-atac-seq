@@ -199,8 +199,12 @@ workflow THATACSEQ {
     SAMTOOLS_FAIDX (
         params.fasta
     )
+    //
+    // ch_genome_sizes_bigwig = Channel.path(SAMTOOLS_FAIDX.out.sizes)
+    // ch_genome_sizes_bigwig | view
+    // //
     // UCSC_BEDGRAPHTOBIGWIG (
-    //     MACS2_CALLPEAK.out.bdg, path_of_sizes
+    //       MACS2_CALLPEAK.out.bdg, SAMTOOLS_FAIDX.out.sizes
     // )
     //
     // 
