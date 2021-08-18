@@ -79,6 +79,7 @@ include { UCSC_BEDGRAPHTOBIGWIG} from '../modules/nf-core/modules/ucsc/bedgrapht
 
 //include {samtools_index; samtools_view; samtools_faidx; samtools_sort} from '../modules/nf-core/modules/samtools'
 
+include { SAMTOOLS_FAIDX } from '../modules/nf-core/modules/samtools/faidx/main' addParams( options: modules['samtools_faidx'] )
 
 // building a BWA index
 // if (!params.bwa_index) {
@@ -195,6 +196,9 @@ workflow THATACSEQ {
           SAMTOOLS_VIEW.out.bam, ch_macs2_gsize
     )
     // 
+    SAMTOOLS_FAIDX (
+        params.fasta
+    )
     // UCSC_BEDGRAPHTOBIGWIG (
     //     MACS2_CALLPEAK.out.bdg, path_of_sizes
     // )
