@@ -34,7 +34,7 @@ process FASTQC {
         """
         [ ! -f  ${prefix}.fastq.gz ] && ln -s $reads ${prefix}.fastq.gz
         fastqc $options.args --threads $task.cpus ${prefix}.fastq.gz
-        fastqc --version | sed -e "s/FastQC v//g" > ${software}.version.txt
+        fastqc --version | sed -e "s/FastQC v//g" s> ${software}.version.txt
         """
     } else {
         """
