@@ -29,7 +29,7 @@ process MACS2_CALLPEAK {
 
     tuple val(meta), path("*.gappedPeak"), optional:true, emit: gapped
     tuple val(meta), path("*.bed")       , optional:true, emit: bed
-    tuple val(meta), path("*.bdg")       , optional:true, emit: bdg
+    tuple val(meta), path("*sorted.bdg")       , optional:true, emit: bdg
 
     script:
     def software = getSoftwareName(task.process)
@@ -43,8 +43,8 @@ process MACS2_CALLPEAK {
         --gsize $macs2_gsize \\
         --format $format \\
         --name $prefix \\
-        --treatment $ipbam 
-
+        --treatment $ipbam
+    sort -k1,1 -k2,2n ${prefix}_treat_pileup.bdg > ${prefix}.sorted.bdg
     macs2 --version | sed -e "s/macs2 //g" > ${software}.version.txt
     """
 }
