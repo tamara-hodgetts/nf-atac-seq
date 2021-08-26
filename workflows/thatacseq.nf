@@ -80,6 +80,8 @@ include { UCSC_BEDGRAPHTOBIGWIG} from '../modules/nf-core/modules/ucsc/bedgrapht
 //include {samtools_index; samtools_view; samtools_faidx; samtools_sort} from '../modules/nf-core/modules/samtools'
 
 include { SAMTOOLS_FAIDX } from '../modules/nf-core/modules/samtools/faidx/main' addParams( options: modules['samtools_faidx'] )
+include { BEDTOOLS_SORT } from '../modules/nf-core/modules/bedtools/sort/main' addParams( options: modules['bedtools_sort'] )
+
 
 // building a BWA index
 // if (!params.bwa_index) {
@@ -199,9 +201,13 @@ workflow THATACSEQ {
     SAMTOOLS_FAIDX (
         params.fasta
     )
+    // 
+    BEDTOOLS_SORT (
+        MACS2_CALLPEAK.out.bed
+    )
     //
     // ch_genome_sizes_bigwig = Channel.path(SAMTOOLS_FAIDX.out.sizes)
-    // ch_genome_sizes_bigwig | view
+     //ch_genome_sizes_bigwig | view
     // //
     // UCSC_BEDGRAPHTOBIGWIG (
     //       MACS2_CALLPEAK.out.bdg, SAMTOOLS_FAIDX.out.sizes
