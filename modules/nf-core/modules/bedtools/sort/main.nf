@@ -33,7 +33,8 @@ process BEDTOOLS_SORT {
         sort \\
         -i $bed \\
         $options.args \\
-        > ${prefix}.bed
+        > ${prefix}.bed \\
+    | sort -k1,1 -k2,2n - > sorted.bedGraph
 
     bedtools --version | sed -e "s/bedtools v//g" > ${software}.version.txt
     """
